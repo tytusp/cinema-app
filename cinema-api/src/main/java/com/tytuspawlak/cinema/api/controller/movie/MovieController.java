@@ -1,9 +1,7 @@
 package com.tytuspawlak.cinema.api.controller.movie;
 
 import com.tytuspawlak.cinema.core.dto.movie.MovieDTO;
-import com.tytuspawlak.cinema.core.dto.movie.MovieDetailsDTO;
 import com.tytuspawlak.cinema.core.dto.movie.MovieIdType;
-import com.tytuspawlak.cinema.core.logic.movie.MovieDetailsProvider;
 import com.tytuspawlak.cinema.core.service.movie.MovieService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +19,7 @@ import java.util.function.Function;
 public class MovieController {
     private final MovieService service;
     private final MovieSearchByIdStrategyProvider searchByIdStrategyProvider;
-    private final MovieDetailsProvider detailsProvider;
+    private final MovieIdTypeProvider idTypeProvider;
 
     @GetMapping("/")
     public List<MovieDTO> findAllMovies() {
@@ -30,23 +28,10 @@ public class MovieController {
 
     @GetMapping("/{id}")
     public MovieDTO findMovie(@PathVariable String id, @RequestParam(required = false) MovieIdType idType) {
-        MovieIdType idTypeWithFallback = getIdTypeWithFallback(idType);
+        MovieIdType idTypeWithFallback = idTypeProvider.getIdTypeWithFallback(idType);
         Function<String, Optional<MovieDTO>> searchStrategy = searchByIdStrategyProvider.getMovieSearchByIdStrategy(idTypeWithFallback);
 
         return searchStrategy.apply(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Movie not found for ID=" + id + ", idType=" + idType));
-    }
-
-    @GetMapping("/{id}/details")
-    public MovieDetailsDTO findMovieDetails(@PathVariable String id, @RequestParam(required = false) MovieIdType idType) {
-        MovieIdType idTypeWithFallback = getIdTypeWithFallback(idType);
-
-        return detailsProvider.findMovieDetails(id, idTypeWithFallback)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Movie details not found for ID=" + id + ", idType=" + idType));
-    }
-
-    private MovieIdType getIdTypeWithFallback(MovieIdType idType) {
-        return Optional.ofNullable(idType)
-                .orElse(MovieIdType.LOCAL_DB);
     }
 }
