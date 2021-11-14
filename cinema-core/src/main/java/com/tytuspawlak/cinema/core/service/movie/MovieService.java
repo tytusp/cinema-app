@@ -1,4 +1,4 @@
-package com.tytuspawlak.cinema.core.service;
+package com.tytuspawlak.cinema.core.service.movie;
 
 import com.tytuspawlak.cinema.core.dto.movie.MovieDTO;
 import com.tytuspawlak.cinema.core.dto.movie.MovieSearchFilter;

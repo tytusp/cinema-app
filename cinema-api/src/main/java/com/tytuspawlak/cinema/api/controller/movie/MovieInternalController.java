@@ -1,7 +1,7 @@
 package com.tytuspawlak.cinema.api.controller.movie;
 
 import com.tytuspawlak.cinema.core.dto.movie.MovieDTO;
-import com.tytuspawlak.cinema.core.service.MovieService;
+import com.tytuspawlak.cinema.core.service.movie.MovieService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

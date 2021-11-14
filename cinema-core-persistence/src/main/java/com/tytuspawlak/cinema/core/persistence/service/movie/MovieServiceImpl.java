@@ -4,7 +4,7 @@ import com.tytuspawlak.cinema.core.dto.movie.MovieDTO;
 import com.tytuspawlak.cinema.core.dto.movie.MovieSearchFilter;
 import com.tytuspawlak.cinema.core.persistence.model.DBMovie;
 import com.tytuspawlak.cinema.core.persistence.repository.movie.MovieRepository;
-import com.tytuspawlak.cinema.core.service.MovieService;
+import com.tytuspawlak.cinema.core.service.movie.MovieService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
