@@ -2,6 +2,8 @@ package com.tytuspawlak.cinema.api.controller.movie;
 
 import com.tytuspawlak.cinema.core.dto.movie.MovieDTO;
 import com.tytuspawlak.cinema.core.service.movie.MovieService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,17 +18,26 @@ import java.util.List;
 @RestController
 @RequestMapping("/internal-api/movie")
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
+@Tag(name = "Movie internal", description = "Movies internal operations available for cinema administrators")
 public class MovieInternalController {
     private final MovieService service;
 
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(
+            summary = "Adds new movies",
+            description = "Adds new movies to the cinema catalog"
+    )
     public Collection<MovieDTO> addMovies(Collection<MovieDTO> movies) {
         return service.addMovies(movies);
     }
 
     @PostMapping("/default")
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(
+            summary = "Adds default movies",
+            description = "Adds movies from the 'Fast & Furious' franchise that are supposed to be available in the example cinema"
+    )
     public Collection<MovieDTO> addDefaultMovies() {
         List<MovieDTO> movies = List.of(
                 newMovie("The Fast and the Furious",	"tt0232500"),

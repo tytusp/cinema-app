@@ -6,6 +6,8 @@ import com.tytuspawlak.cinema.api.controller.schedule.dto.ScheduleItemsUpdateReq
 import com.tytuspawlak.cinema.core.dto.schedule.ScheduleItemDTO;
 import com.tytuspawlak.cinema.core.service.movie.MovieService;
 import com.tytuspawlak.cinema.core.service.schedule.ScheduleItemService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,12 +21,17 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/internal-api/schedule")
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
+@Tag(name = "Schedule internal", description = "Cinema schedule internal operations available for cinema administrators")
 public class ScheduleInternalController {
     private final MovieService movieService;
     private final ScheduleItemService service;
 
     @PostMapping("/{movieId}/item")
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(
+            summary = "Adds new schedule items",
+            description = "Adds new schedule items (single show descriptors containing show time and price) for a movie specified by its ID"
+    )
     public List<ScheduleItemDTO> addMovieScheduleItems(@PathVariable String movieId, @RequestBody ScheduleItemsAddRequestTO requestTO) {
         validateAddRequest(requestTO, movieId);
 
@@ -37,6 +44,10 @@ public class ScheduleInternalController {
 
     @PutMapping("/{movieId}/item/{itemId}")
     @ResponseStatus(HttpStatus.OK)
+    @Operation(
+            summary = "Updates an existing schedule item",
+            description = "Updates an existing schedule item identified by its ID"
+    )
     public ScheduleItemDTO updateMovieScheduleItem(@PathVariable String movieId, @PathVariable String itemId, @RequestBody ScheduleItemsUpdateRequestTO requestTO) {
         validateUpdateRequest(requestTO, movieId);
 
@@ -51,6 +62,10 @@ public class ScheduleInternalController {
 
     @DeleteMapping("/{movieId}/item/{itemId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(
+            summary = "Deletes a schedule item",
+            description = "Deletes a schedule item identified by its ID"
+    )
     public void deleteMovieScheduleItem(@PathVariable String movieId, @PathVariable String itemId) {
         validateMovieId(movieId);
 

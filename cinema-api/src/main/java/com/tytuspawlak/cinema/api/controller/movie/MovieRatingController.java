@@ -5,6 +5,8 @@ import com.tytuspawlak.cinema.core.dto.movie.MovieIdType;
 import com.tytuspawlak.cinema.core.dto.movie.MovieRatingDTO;
 import com.tytuspawlak.cinema.core.logic.movie.MovieRatingSaver;
 import com.tytuspawlak.cinema.core.logic.movie.exception.IncorrectMovieIdException;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,12 +16,17 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 @RequestMapping("/api/movie")
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
+@Tag(name = "Movie rating", description = "Movie's rating operations available for regular users")
 public class MovieRatingController {
     private final MovieIdTypeProvider idTypeProvider;
     private final MovieRatingSaver ratingSaver;
 
     @PostMapping("/{id}/rating")
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(
+            summary = "Adds a review rating for a movie",
+            description = "Adds a review rating for a movie identified by its ID or IMDb ID"
+    )
     public MovieRatingDTO addMovieRating(@PathVariable String id, @RequestBody MovieAddRatingRequestTO requestTO) {
         validateRequest(requestTO);
 
