@@ -31,7 +31,7 @@ public class MovieRatingSaver {
 
         return saveResult.stream()
                 .findFirst()
-                .orElseThrow(() -> new IllegalStateException("Could not save move rating: " + ratingToSave));
+                .orElseThrow(() -> new IllegalStateException("Could not save movie rating: " + ratingToSave));
     }
 
     private Optional<String> getMovieId(String id, MovieIdType idType) {
