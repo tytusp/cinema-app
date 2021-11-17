@@ -7,12 +7,12 @@ java -jar cinema-api-0.0.1-SNAPSHOT.jar --cinema.externalcatalog.omdb.apiKey=[TH
 In case of starting the application from an IDE, please enter `--cinema.externalcatalog.omdb.apiKey=[THE_API_KEY]` in the programs arguments list.
 
 ## API documentation
-Once the application is run, the documentation can be found at `http://localhost:8080/swagger-ui.html`
+Once the application is run, the documentation can be found at http://localhost:8080/swagger-ui.html
 
 ## Application architecture
 * The application has been divided into four modules with the future development and scalability in mind.
   * The `cinema-api` module contains all the endpoints and integration tests.
-  * The `cinema-core` module contains some required business logic and DTOs for transferring the data between the modules.
+  * The `cinema-core` module contains some required business logic, DTOs for transferring the data between the modules and services interfaces.
   * The `cinema-core-persistence` module contains the persistence layer (details below).
   * The `cinema-core-external-catalog` module contains code that connects with the OMDb API. It has been implemented in a way allowing to easily add other external movie catalogs integrations.
 * There is a dependency inversion applied between the modules as presented in the diagram below. Thanks to that both `cinema-api` and `cinema-core` know nothing about details of the persistence and external catalogs implementations. It opens a possibility to easily extract the latter two as separate services in case the application or user base grow or even replace them with entirely different implementations.
